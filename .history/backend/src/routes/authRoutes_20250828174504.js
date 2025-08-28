@@ -2,8 +2,6 @@
 
 import express from 'express';
 import Restaurant from '../models/Restaurant.js';
-import jwt from 'jsonwebtoken';
-
 
 const router = express.Router();
 
@@ -62,17 +60,9 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'E-mail ou senha inválidos.' });
         }
 
-        // Gerar token JWT
-        const token = jwt.sign(
-            { id: restaurant._id }, 
-            process.env.JWT_SECRET, 
-            { expiresIn: '1h' }
-        );
-
         // 3. Login bem-sucedido
         res.status(200).json({
             message: 'Login bem-sucedido!',
-            token,
             restaurant: {
                 id: restaurant._id,
                 name: restaurant.name,
